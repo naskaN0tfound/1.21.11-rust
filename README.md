@@ -17,3 +17,8 @@ cargo build --release -p horizon-client --features mc-1-21-11     # the 1.21.11 
 Run `build-sparkz.bat` from the folder that contains this repo's `launcher` folder. It installs Rust and the C++
 build tools, builds the launcher, and writes `Sparkz.exe` beside the `.bat`. Microsoft sign-in needs your own
 Azure client ID and Mojang's approval: see `SPARKZ-LOGIN.txt`.
+
+## Build without installing anything
+The upstream Horizon workflows (releases, nightlies, parity audits that need Horizon's own machines and keys) are
+parked in `.github/upstream-workflows-disabled/` so they do not run here. `.github/workflows/sparkz-windows.yml`
+builds `Sparkz.exe` on GitHub: Actions tab, "Build Sparkz (Windows)", Run workflow, download the artifact.

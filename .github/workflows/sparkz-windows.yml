@@ -1,0 +1,65 @@
+name: Build Sparkz (Windows)
+
+# Builds Sparkz.exe on GitHub's Windows machines, so nothing has to be installed locally:
+# Actions tab -> "Build Sparkz (Windows)" -> Run workflow -> download the artifact when it finishes.
+#
+# Microsoft sign-in: add a repository VARIABLE named HORIZON_MSA_CLIENT_ID (Settings -> Secrets and variables ->
+# Actions -> Variables) with your own Azure app's client ID. See SPARKZ-LOGIN.txt. Unset, the launcher builds
+# without sign-in.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'launcher/**'
+      - 'crates/**'
+      - '.github/workflows/sparkz-windows.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  launcher:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    env:
+      # The C runtime linked in: the exe runs without the Visual C++ redistributable.
+      RUSTFLAGS: -C target-feature=+crt-static
+      HORIZON_MSA_CLIENT_ID: ${{ vars.HORIZON_MSA_CLIENT_ID }}
+    defaults:
+      run:
+        working-directory: launcher
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: launcher
+      - run: cargo build --release
+      - run: cp target/release/horizon-launcher.exe ../Sparkz.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Sparkz
+          path: Sparkz.exe
+          if-no-files-found: error
+
+  game-1-21-11:
+    # The 1.21.11 game build. It compiles; it has not passed the comparison tests (docs/mc-1.21.11.md).
+    runs-on: windows-latest
+    timeout-minutes: 90
+    continue-on-error: true
+    env:
+      RUSTFLAGS: -C target-feature=+crt-static
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo build --release -p horizon-client --features mc-1-21-11
+        shell: bash
+      - uses: actions/upload-artifact@v4
+        with:
+          name: horizon-client-1.21.11
+          path: target/release/horizon-client.exe
+          if-no-files-found: error
