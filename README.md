@@ -22,3 +22,6 @@ Azure client ID and Mojang's approval: see `SPARKZ-LOGIN.txt`.
 The upstream Horizon workflows (releases, nightlies, parity audits that need Horizon's own machines and keys) are
 parked in `.github/upstream-workflows-disabled/` so they do not run here. `.github/workflows/sparkz-windows.yml`
 builds `Sparkz.exe` on GitHub: Actions tab, "Build Sparkz (Windows)", Run workflow, download the artifact.
+
+## Credits
+See `CREDITS.md`.
