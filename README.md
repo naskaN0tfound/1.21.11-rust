@@ -2,7 +2,7 @@
 
 Minecraft Java **1.21.11** in Rust, plus the **Sparkz** launcher (26.3 and 1.21.11).
 
-Built on [Horizon](https://github.com/) by Ludovic Marie and the Horizon contributors (MIT, see `LICENSE`
+Built on Horizon by Ludovic Marie and the Horizon contributors (MIT, see `LICENSE`
 and `THIRD_PARTY_NOTICES.md`). Horizon's own readme is `README.horizon.md`.
 
 ## Status
