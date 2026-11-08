@@ -1,0 +1,23 @@
+Microsoft login for Sparkz - one-time setup (free, about 5 minutes)
+
+Why: Microsoft only lets a program sign players in if the program has its own "app registration".
+Horizon's belongs to its author, and using another launcher's ID is not allowed, so you make your own.
+
+1. Go to https://portal.azure.com and sign in with any Microsoft account.
+2. Search "App registrations" -> New registration.
+   - Name: Sparkz
+   - Supported account types: "Personal Microsoft accounts only"
+   - Redirect URI: leave empty (or add https://login.microsoftonline.com/common/oauth2/nativeclient as "Mobile and desktop")
+   - Register.
+3. Open the app -> Authentication -> Advanced settings -> "Allow public client flows" = Yes -> Save.
+4. Copy the "Application (client) ID" from the Overview page.
+5. Run build-sparkz.bat and paste the ID when asked (it is saved in sparkz-client-id.txt).
+   Already built? Without rebuilding, set the environment variable HORIZON_MSA_CLIENT_ID to the ID
+   before starting Sparkz.exe (e.g. in a .bat: set HORIZON_MSA_CLIENT_ID=your-id & start Sparkz.exe).
+
+6. IMPORTANT - Mojang must approve the app. A new app ID is refused by Minecraft's servers
+   ("Invalid app registration", HTTP 403) until Mojang reviews it. Apply at https://aka.ms/mce-reviewappid
+   with your client ID and a short description. Approval takes days to weeks. Until then Microsoft
+   sign-in stops at the Minecraft step; this is Mojang's rule and no launcher can skip it.
+
+Sparkz starts the game only for an account that owns Minecraft: Java Edition.
