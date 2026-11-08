@@ -1,0 +1,8 @@
+[package]
+name = "launcher"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Starts the 1.21.11 Rust client in its own game folder"
+
+[dependencies]
